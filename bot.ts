@@ -36,14 +36,14 @@ bot.on(/^\/def[\w]* (.+)$/, async (msg: any, props: any) => {
         message = `Definition 1 of ${definition.length}\n<em>${definition[0][1]}</em>\n${definition[0][0]}\nSource:\n${definition[0][2]}`;
     }
     if (definition.length == 1 || definition == 'Error') {
-        return bot.sendMessage(msg.from.id, message, { replyToMessage: msg.message_id });
+        return bot.sendMessage(msg.chat.id, message, { replyToMessage: msg.message_id });
     }
     const replyMarkup = bot.inlineKeyboard([
         [
             bot.inlineButton('Next Definition', {callback: `def ${text} 1`})
         ]
     ]);
-    return bot.sendMessage(msg.from.id, message, { replyMarkup, replyToMessage: msg.message_id ,parseMode: 'html', webPreview : false });
+    return bot.sendMessage(msg.chat.id, message, { replyMarkup, replyToMessage: msg.message_id ,parseMode: 'html', webPreview : false });
 });
 
 async function get_synonym_antonym(word: string)  { 
@@ -92,7 +92,7 @@ bot.on(/^\/syn[\w]* (.+)$/, async (msg: any, props: any) => {
     const replyMarkup = bot.inlineKeyboard([
         button
     ]);
-    return bot.sendMessage(msg.from.id, message, { replyMarkup, replyToMessage: msg.message_id ,parseMode: 'html', webPreview : false });
+    return bot.sendMessage(msg.chat.id, message, { replyMarkup, replyToMessage: msg.message_id ,parseMode: 'html', webPreview : false });
 });
 
 // Button callback
