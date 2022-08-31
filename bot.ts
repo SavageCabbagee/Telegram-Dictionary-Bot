@@ -36,7 +36,7 @@ bot.on(/^\/def[\w]* (.+)$/, async (msg: any, props: any) => {
         message = `Definition 1 of ${definition.length}\n<em>${definition[0][1]}</em>\n${definition[0][0]}\nSource:\n${definition[0][2]}`;
     }
     if (definition.length == 1 || definition == 'Error') {
-        return bot.sendMessage(msg.chat.id, message, { replyToMessage: msg.message_id });
+        return bot.sendMessage(msg.chat.id, message, { replyToMessage: msg.message_id ,parseMode: 'html', webPreview : false});
     }
     const replyMarkup = bot.inlineKeyboard([
         [
