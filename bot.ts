@@ -9,8 +9,8 @@ const thesaurus_api = String(process.env.thesaurusapi);
 async function get_definition(word: string)  { 
     word = word.toLowerCase()
     var list: any = Array();
-    const res = await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
     try{
+        const res = await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
         for (let i = 0; i < res.data.length; i++ ){
             for (let i1 = 0; i1 < res.data[i].meanings.length; i1++ ) {
                 for (let i2 = 0; i2 < res.data[i].meanings[i1].definitions.length; i2++ ) {
@@ -19,10 +19,10 @@ async function get_definition(word: string)  {
             }
         }
     } catch (error: any)  {
-            console.log(error.code);
-            list = 'Error';
+        console.log(error.code);
+        list = 'Error';
     }
-    
+
     return(list);     
 }
 
@@ -49,16 +49,16 @@ bot.on(/^\/def[\w]* (.+)$/, async (msg: any, props: any) => {
 async function get_synonym_antonym(word: string)  { 
     word = word.toLowerCase()
     var list: any = Array();
-    const res = await axios.get(`https://www.dictionaryapi.com/api/v3/references/thesaurus/json/${word}?key=${thesaurus_api}`)     
     try{
+        const res = await axios.get(`https://www.dictionaryapi.com/api/v3/references/thesaurus/json/${word}?key=${thesaurus_api}`)     
         for (let i = 0; i < res.data.length; i++ ){
             if (res.data[i].meta.id.slice(0,res.data[i].meta.id.length - 1) == `${word}:` || res.data[i].meta.id == `${word}`) {
                 list.push([res.data[i].shortdef,res.data[i].meta.syns[0],res.data[i].meta.ants[0]]);
             }
         }
     } catch (error: any)  {
-            console.log(error.code);
-            list = 'Error';
+        console.log(error);
+        list = 'Error';
     }
 
     return(list);
