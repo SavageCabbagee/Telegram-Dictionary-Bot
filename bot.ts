@@ -2,9 +2,13 @@ const TeleBot = require('telebot');
 const axios = require('axios').default;
 require('dotenv').config();
 
-const bot = new TeleBot(process.env.tgapi);
-const dictionary_api = String(process.env.dictapi);
 const thesaurus_api = String(process.env.thesaurusapi);
+const bot = new TeleBot({
+    token: (process.env.tgapi), // Required. Telegram Bot API token.
+    polling: { // Optional. Use polling.
+        retryTimeout: 60000, // Optional. Reconnecting timeout (in ms).
+    },
+});
 
 async function get_definition(word: string)  { 
     word = word.toLowerCase()
