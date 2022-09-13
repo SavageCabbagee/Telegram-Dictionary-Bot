@@ -34,6 +34,7 @@ bot.on(/^\/def[\w]* (.+)$/, async (msg: any, props: any) => {
     const text = props.match[1];
     const definition: any = await get_definition(text);
     var message;
+
     if (definition == 'Error') {
         message = 'Error';
     } else {
@@ -106,9 +107,10 @@ bot.on('callbackQuery', async (msg: any) => {
     var message;
 
     if (msg.data.split(" ")[0] == 'def') {
-        const def_num = Number(msg.data.split(" ")[2]);
-        const text = msg.data.split(" ")[1];
+        const def_num = Number(msg.data.split(" ")[msg.data.split(" ").length - 1]);
+        const text = msg.data.split(" ").slice(1,-1).join(' ');
         const definition: any = await get_definition(text);
+
         if (definition == 'Error') {
             message = 'Error';
         } else {
@@ -141,8 +143,8 @@ bot.on('callbackQuery', async (msg: any) => {
         bot.answerCallbackQuery(msg.id);
 
     } else if (msg.data.split(" ")[0] == 'syn') {
-        const def_num = Number(msg.data.split(" ")[2]);
-        const text = msg.data.split(" ")[1];
+        const def_num = Number(msg.data.split(" ")[msg.data.split(" ").length - 1]);
+        const text = msg.data.split(" ").slice(1,-1).join(' ');
         const synonym: any = await get_synonym_antonym(text);
 
         if (synonym == 'Error') {
