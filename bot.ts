@@ -27,7 +27,7 @@ async function get_definition(word: string)  {
         list = 'Error';
     }
 
-    return(list);     
+    return(list);
 }
 
 bot.on(/^\/def[\w]* (.+)$/, async (msg: any, props: any) => {
@@ -116,7 +116,7 @@ bot.on('callbackQuery', async (msg: any) => {
         } else {
             message = `Definition ${def_num+1} of ${definition.length}\n<em>${definition[def_num][1]}</em>\n${definition[def_num][0]}\nSource:\n${definition[def_num][2]}`;
         }
-    
+
         if (def_num == definition.length - 1) {
             var replyMarkup = bot.inlineKeyboard([
                 [
@@ -137,10 +137,10 @@ bot.on('callbackQuery', async (msg: any) => {
                 ]
             ]);
         }
-    
+
         bot.editMessageText( {chatId: chatid, messageId: msgid}, message, { replyMarkup ,parseMode: 'html', webPreview : false }).catch((error: any) => {
             console.log(error)});
-        bot.answerCallbackQuery(msg.id);
+        return bot.answerCallbackQuery(msg.id);
 
     } else if (msg.data.split(" ")[0] == 'syn') {
         const def_num = Number(msg.data.split(" ")[msg.data.split(" ").length - 1]);
@@ -158,7 +158,7 @@ bot.on('callbackQuery', async (msg: any) => {
                     message = message + ` ${synonym[def_num][1][i]},`
                 }
             }
-            
+
             if (synonym[def_num][2] == undefined) {
                 message = message + '\n\nNo antonyms found';
             } else {
@@ -173,9 +173,9 @@ bot.on('callbackQuery', async (msg: any) => {
 
         bot.editMessageText( {chatId: chatid, messageId: msgid}, message, { parseMode: 'html', webPreview : false }).catch((error: any) => {
             console.log(error)});
-        bot.answerCallbackQuery(msg.id);
+        return bot.answerCallbackQuery(msg.id);
     }
-    
+
 });
 
 bot.start();
